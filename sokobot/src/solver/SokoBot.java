@@ -67,13 +67,20 @@ public class SokoBot {
     }
 
     private int calculateHeuristic() {
-      int totalPushDistance = 0;
-      for (int[] boxPos : boxPositions) {
+    int totalPushDistance = 0;
+
+    for (int[] boxPos : boxPositions) {
         int pdbVal = patternDatabase[boxPos[0]][boxPos[1]];
-        totalPushDistance += (pdbVal == Integer.MAX_VALUE) ? 1000 : pdbVal; // Penalize unreachable
-      }
-      return totalPushDistance;
+        totalPushDistance += (pdbVal == Integer.MAX_VALUE) ? 1000 : pdbVal; // Penalize unreachable tiles
     }
+
+    int tieBreaker = Arrays.stream(boxPositions)
+            .mapToInt(b -> b[0] * 100 + b[1])
+            .sum();
+
+    // Combine heuristic and tiebreaker like in your code
+    return totalPushDistance * 10000 + tieBreaker;
+  }
 
     public List<State> getSuccessors() {
       List<State> successors = new ArrayList<>();
