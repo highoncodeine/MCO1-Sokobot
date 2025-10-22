@@ -78,7 +78,6 @@ public class SokoBot {
             .mapToInt(b -> b[0] * 100 + b[1])
             .sum();
 
-    // Combine heuristic and tiebreaker like in your code
     return totalPushDistance * 10000 + tieBreaker;
   }
 
@@ -247,4 +246,5 @@ public class SokoBot {
     return path.reverse().toString();
   }
 }
+
 
