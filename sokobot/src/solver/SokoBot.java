@@ -67,19 +67,19 @@ public class SokoBot {
     }
 
     private int calculateHeuristic() {
-    int totalPushDistance = 0;
-
-    for (int[] boxPos : boxPositions) {
-        int pdbVal = patternDatabase[boxPos[0]][boxPos[1]];
-        totalPushDistance += (pdbVal == Integer.MAX_VALUE) ? 1000 : pdbVal; // Penalize unreachable tiles
+      int totalPushDistance = 0;
+  
+      for (int[] boxPos : boxPositions) {
+          int pdbVal = patternDatabase[boxPos[0]][boxPos[1]];
+          totalPushDistance += (pdbVal == Integer.MAX_VALUE) ? 1000 : pdbVal; // Penalize unreachable tiles
+      }
+  
+      int tieBreaker = Arrays.stream(boxPositions)
+              .mapToInt(b -> b[0] * 100 + b[1])
+              .sum();
+  
+      return totalPushDistance * 10000 + tieBreaker;
     }
-
-    int tieBreaker = Arrays.stream(boxPositions)
-            .mapToInt(b -> b[0] * 100 + b[1])
-            .sum();
-
-    return totalPushDistance * 10000 + tieBreaker;
-  }
 
     public List<State> getSuccessors() {
       List<State> successors = new ArrayList<>();
@@ -246,5 +246,6 @@ public class SokoBot {
     return path.reverse().toString();
   }
 }
+
 
 
